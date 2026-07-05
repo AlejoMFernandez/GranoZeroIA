@@ -1,0 +1,60 @@
+{
+  "name": "GranoZero — aprender café",
+  "short_name": "GranoZero",
+  "description": "PWA educativa sobre café: del origen al sorbo. Ocho preparaciones, mapa del cinturón cafetero, métodos de extracción y un carnet de aprendiz.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#1F1410",
+  "theme_color": "#1F1410",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["education", "lifestyle", "food"],
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/icon-192-maskable.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Catálogo",
+      "short_name": "Catálogo",
+      "url": "./index.html#catalogo",
+      "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Cata",
+      "short_name": "¿Qué café sos?",
+      "url": "./index.html#cata",
+      "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Mi diario",
+      "short_name": "Diario",
+      "url": "./index.html#diario",
+      "icons": [{ "src": "assets/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
