@@ -3,9 +3,16 @@
 <head>
 <meta charset="utf-8" />
 <title>Grano Zero — aprender café</title>
+<template id="__bundler_thumbnail" data-bg-color="#1F1410">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="26" fill="#C8881F" />
+    <path d="M50 26 Q40 40 50 50 Q60 60 50 74" stroke="#1F1410" stroke-width="4" fill="none" stroke-linecap="round" />
+  </svg>
+</template>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#1F1410" />
 <meta name="description" content="PWA para aprender café — ocho preparaciones esenciales, una taza, cero vocabulario críptico." />
+<meta name="ext-resource-dependency" content="./assets/bean.png" data-resource-id="beanImg" />
 
 <link rel="manifest" href="manifest.json" />
 <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
@@ -788,18 +795,9 @@ body::before{
 <script type="text/babel" src="sounds.jsx"></script>
 <script type="text/babel" src="cafe-svgs.jsx"></script>
 <script type="text/babel" src="dock.jsx"></script>
-<script type="text/babel" src="sections.jsx"></script>
-<script type="text/babel" src="app.jsx"></script>
+<script type="text/babel" src="sections-standalone.jsx"></script>
+<script type="text/babel" src="app-standalone.jsx"></script>
 
-<!-- PWA: registrar service worker -->
-<script>
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js")
-        .then((reg) => console.log("[GZ] Service Worker registrado:", reg.scope))
-        .catch((err) => console.warn("[GZ] SW registration failed:", err));
-    });
-  }
-</script>
+<!-- Versión standalone: sin service worker (no aplica offline-caching de un solo archivo) -->
 </body>
 </html>

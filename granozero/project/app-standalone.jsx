@@ -24,7 +24,7 @@ function Header({ visible, soundOn, setSoundOn, ambientOn, setAmbientOn, onJumpC
   return (
     <header className={`gz-header ${visible ? "is-visible" : ""} ${scrolled ? "is-scrolled" : ""}`}>
       <a className="gz-logo" href="#top" onClick={(e) => { e.preventDefault(); Sfx.click(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
-        <img className="gz-logo-bean" src="assets/bean.png" alt="" aria-hidden="true" />
+        <img className="gz-logo-bean" src={window.__resources.beanImg} alt="" aria-hidden="true" />
         <span className="gz-logo-text">
           <span className="gz-logo-text-grano">Grano</span><em>Zero</em>
         </span>
@@ -114,7 +114,7 @@ function Splash({ onDone }) {
   return (
     <div className={`gz-splash gz-splash-p${phase}`} aria-hidden={phase >= 2}>
       <div className="gz-splash-frame">
-        <img className="gz-splash-bean" src="assets/bean.png" alt="" />
+        <img className="gz-splash-bean" src={window.__resources.beanImg} alt="" />
         <div className="gz-splash-wordmark">
           <span className="gz-splash-grano">Grano</span><em className="gz-splash-zero">Zero</em>
         </div>
@@ -229,7 +229,7 @@ function CenterpieceCup() {
         { x: "86%", y: "72%", r: -10, s: 46, op: .45 },
         { x: "84%", y: "18%", r: 40, s: 42, op: .38 }].
         map((d, i) =>
-        <img key={i} className="gz-stage-bean" src="assets/bean.png" alt="" aria-hidden="true" style={{
+        <img key={i} className="gz-stage-bean" src={window.__resources.beanImg} alt="" aria-hidden="true" style={{
           width: `${d.s}px`,
           left: d.x, top: d.y,
           opacity: d.op,
@@ -558,7 +558,7 @@ function Footer({ onOpenCata }) {
       <div className="gz-footer-grid">
         {/* Columna 1: brand */}
         <div className="gz-footer-col gz-footer-col-brand">
-          <img src="assets/bean.png" alt="" className="gz-footer-bean" />
+          <img src={window.__resources.beanImg} alt="" className="gz-footer-bean" />
           <p className="gz-footer-tagline">
             Aprender café, <em>un sorbo a la vez.</em>
           </p>
@@ -615,7 +615,7 @@ function IntensityBeansImg({ intensity = 3, total = 5 }) {
   return (
     <div className="gz-intensity-row">
       {Array.from({ length: total }).map((_, i) =>
-      <img key={i} className={`gz-intensity-bean ${i < intensity ? "is-on" : ""}`} src="assets/bean.png" alt="" aria-hidden="true" />
+      <img key={i} className={`gz-intensity-bean ${i < intensity ? "is-on" : ""}`} src={window.__resources.beanImg} alt="" aria-hidden="true" />
       )}
     </div>);
 

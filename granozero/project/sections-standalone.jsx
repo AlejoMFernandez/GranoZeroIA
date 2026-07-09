@@ -140,7 +140,7 @@ function SectionOrigen() {
           {/* Granos cayendo decorativos (background) */}
           <div className="gz-origen-floating-beans" aria-hidden="true">
             {Array.from({ length: 10 }).map((_, i) => (
-              <img key={i} src="assets/bean.png" alt=""
+              <img key={i} src={window.__resources.beanImg} alt=""
                 style={{
                   left: `${(i * 11 + 7) % 100}%`,
                   width: `${10 + (i % 4) * 4}px`,
@@ -197,7 +197,7 @@ function SectionOrigen() {
           <button key={o.id}
             className={`gz-origen-strip-item ${active.id === o.id ? "is-active" : ""}`}
             onClick={() => { Sfx.click(); setActive(o); }}>
-            <img src="assets/bean.png" alt="" />
+            <img src={window.__resources.beanImg} alt="" />
             <strong>{o.name}</strong>
             <em>{o.cont}</em>
           </button>
@@ -222,7 +222,7 @@ function SectionGrano() {
         {GRANOS.map((g, i) => (
           <article key={g.id} className={`gz-grano-card gz-grano-card-${g.id}`}>
             <div className="gz-grano-card-art">
-              <img src="assets/bean.png" alt={g.name}
+              <img src={window.__resources.beanImg} alt={g.name}
                 style={{
                   width: g.id === "arabica" ? "min(36%, 150px)" : "min(31%, 130px)",
                   transform: g.id === "arabica" ? "rotate(-12deg)" : "rotate(8deg) scaleY(1.05)",
@@ -443,7 +443,7 @@ function TuesteBeanImg({ t }) {
   useE(() => { setFailed(false); }, [t.id]);
   if (failed) {
     return (
-      <img src="assets/bean.png" alt={`Grano ${t.name}`} className="gz-tueste-bean"
+      <img src={window.__resources.beanImg} alt={`Grano ${t.name}`} className="gz-tueste-bean"
         style={{ filter: t.filter }} />
     );
   }
@@ -1006,7 +1006,7 @@ function CataQuiz({ onOpenCafe }) {
         {step >= PREGUNTAS.length && (
           <div className="gz-cata-falling" aria-hidden="true">
             {fallingBeans.map((b, i) => (
-              <img key={i} src="assets/bean.png" alt="" style={{
+              <img key={i} src={window.__resources.beanImg} alt="" style={{
                 left: `${b.left}%`,
                 width: `${b.size}px`,
                 animationDelay: `${b.delay}s`,
@@ -1020,7 +1020,7 @@ function CataQuiz({ onOpenCafe }) {
         {calculating ? (
           <div className="gz-cata-calc" key="calc">
             <div className="gz-cata-calc-bean">
-              <img src="assets/bean.png" alt="" />
+              <img src={window.__resources.beanImg} alt="" />
             </div>
             <p className="gz-cata-calc-text">
               <span className="gz-cata-calc-pulse" />
