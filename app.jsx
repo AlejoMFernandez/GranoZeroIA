@@ -189,7 +189,7 @@ function CenterpieceCup() {
       <div className="gz-stage-steam" aria-hidden="true">
         <Steam count={4} height={130} color="rgba(241,234,216,.5)" delay={400} />
       </div>
-      <svg className="gz-stage-cup" viewBox="0 0 320 280" width="100%" height="auto" aria-hidden="true">
+      <svg className="gz-stage-cup" viewBox="0 0 320 280" style={{ width: "100%", height: "auto" }} aria-hidden="true">
         <defs>
           <radialGradient id="liquid" cx="50%" cy="35%">
             <stop offset="0" stopColor="#5C3A1F" />

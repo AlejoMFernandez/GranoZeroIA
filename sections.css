@@ -130,12 +130,21 @@
 .gz-meridian em{ font-style: normal; }
 .gz-meridian-eq{ color: rgba(200,136,31,.65); }
 
+.gz-origen-map-scroll{
+  position: absolute; inset: 0; z-index: 2;
+  overflow: hidden;
+}
 .gz-origen-svg{
-  position: absolute; inset: 0;
+  display: block;
   width: 100%; height: 100%;
-  z-index: 2;
 }
 .gz-origen-continents path{ transition: fill .3s; }
+
+.gz-origen-scroll-hint{ display: none; }
+
+@media (min-width: 1081px){
+  .gz-origen-sheet-wrap{ display: none; }
+}
 
 .gz-origen-marker{ cursor: pointer; }
 .gz-origen-marker-circle{ transition: r .25s, fill .25s; }
@@ -286,14 +295,41 @@
 .gz-origen-strip-item.is-active img{ filter: drop-shadow(0 0 12px rgba(200,136,31,.6)); }
 
 @media (max-width: 1080px){
-  .gz-origen-grid{ grid-template-columns: 1fr; gap: 28px; }
-  .gz-origen-detail{ padding: 28px 24px; }
+  .gz-origen-grid{ grid-template-columns: minmax(0,1fr); gap: 28px; }
+
+  /* El panel lateral y el carrusel de abajo se reemplazan por el mapa
+     interactivo (más grande, deslizable) + una ficha tipo catálogo. */
+  .gz-origen-detail{ display: none; }
+  .gz-origen-strip{ display: none; }
+
+  .gz-origen-mapwrap{ aspect-ratio: 1/1; border-radius: 20px; }
+  .gz-origen-map-scroll{
+    overflow-x: auto; overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(200,136,31,.35) transparent;
+  }
+  .gz-origen-map-scroll::-webkit-scrollbar{ height: 6px; }
+  .gz-origen-map-scroll::-webkit-scrollbar-thumb{ background: rgba(200,136,31,.35); border-radius: 3px; }
+  .gz-origen-svg{ width: 200%; max-width: none; height: 100%; }
+
+  .gz-origen-scroll-hint{
+    display: inline-flex; align-items: center; gap: 8px;
+    position: absolute; top: 14px; left: 16px; z-index: 3;
+    font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+    color: rgba(241,234,216,.65);
+    background: rgba(31,20,16,.55);
+    padding: 6px 12px; border-radius: 999px;
+    pointer-events: none;
+  }
+
+  /* Al abrir la ficha, el cierre está a la izquierda y el marcador activo
+     ya no necesita mostrar su etiqueta grande (se ve en la ficha). */
+  .gz-origen-sheet{ padding-top: 20px; }
 }
 @media (max-width: 720px){
-  .gz-origen-mapwrap{ aspect-ratio: 4/3; }
   .gz-meridian{ font-size: 7px; }
   .gz-origen-marker-text{ font-size: 14px; }
-  .gz-origen-strip-item{ width: 110px; padding: 14px 10px; }
 }
 
 /* ════════════════ 02 · EL GRANO ═══════════════════════════════════════════ */
@@ -371,7 +407,7 @@
 .gz-grano-perfil{ display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
 
 @media (max-width: 900px){
-  .gz-grano-versus{ grid-template-columns: 1fr; gap: 56px; }
+  .gz-grano-versus{ grid-template-columns: minmax(0,1fr); gap: 56px; }
   .gz-grano-versus-vs{ position: relative; top: 0; left: 0; transform: none; margin: -32px auto -32px; }
 }
 
@@ -465,9 +501,15 @@
 }
 
 @media (max-width: 720px){
-  .gz-anatomia-flow{ grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .gz-anatomia-flow::before{ display: none; }
-  .gz-grano-anatomia{ padding: 28px; }
+  .gz-anatomia-flow{ grid-template-columns: repeat(3, 1fr); gap: 16px 12px; }
+  .gz-anatomia-flow::before, .gz-anatomia-flow::after{ display: none; }
+  .gz-grano-anatomia{ padding: 24px 16px; }
+  .gz-anatomia-step-art{ width: 100%; max-width: 100px; height: auto; aspect-ratio: 1/1; margin: 0 auto 14px; }
+  .gz-anatomia-step strong{ font-size: 15px; }
+  .gz-anatomia-step em{ font-size: 10px; }
+}
+@media (max-width: 360px){
+  .gz-anatomia-flow{ grid-template-columns: repeat(2, 1fr); gap: 20px 16px; }
 }
 
 /* ════════════════ 03 · TUESTE ═════════════════════════════════════════════ */
@@ -585,7 +627,7 @@
 .gz-tueste-stop.is-active .gz-tueste-stop-label{ color: var(--gz-paper); }
 
 @media (max-width: 900px){
-  .gz-tueste-stage{ grid-template-columns: 1fr; gap: 32px; }
+  .gz-tueste-stage{ grid-template-columns: minmax(0,1fr); gap: 32px; }
   .gz-tueste-bean{ width: 60%; }
   .gz-tueste-stop-label{ font-size: 8px; letter-spacing: .1em; }
   .gz-tueste-slider{ padding: 0; }
@@ -659,7 +701,7 @@
 }
 
 @media (max-width: 720px){
-  .gz-molienda-detail{ grid-template-columns: 1fr; gap: 18px; padding: 22px; }
+  .gz-molienda-detail{ grid-template-columns: minmax(0,1fr); gap: 18px; padding: 22px; }
 }
 
 /* ════════════════ 05 · MÉTODOS ════════════════════════════════════════════ */
@@ -851,7 +893,7 @@
 }
 
 @media (max-width: 980px){
-  .gz-metodos-stage{ grid-template-columns: 1fr; }
+  .gz-metodos-stage{ grid-template-columns: minmax(0,1fr); }
   .gz-metodos-tabs{
     flex-direction: row; flex-wrap: nowrap;
     overflow-x: auto; gap: 8px;
@@ -869,7 +911,7 @@
     width: 60%; height: 3px;
   }
   .gz-metodos-tab.is-active::before{ transform: translateX(-50%) scaleX(1); }
-  .gz-lamina{ grid-template-columns: 1fr; gap: 20px; padding: 22px; }
+  .gz-lamina{ grid-template-columns: minmax(0,1fr); gap: 20px; padding: 22px; }
 }
 
 /* ─── Animaciones de la lámina (corren cuando .gz-mil.is-running) ─── */
@@ -1123,6 +1165,7 @@
   position: relative;
   grid-column: 1 / -1;
   aspect-ratio: 16/7;
+  flex-shrink: 0;
   background:
     repeating-linear-gradient(0deg, transparent 0, transparent 44px, rgba(241,234,216,.03) 44px, rgba(241,234,216,.03) 45px),
     repeating-linear-gradient(90deg, transparent 0, transparent 44px, rgba(241,234,216,.03) 44px, rgba(241,234,216,.03) 45px),
@@ -1154,7 +1197,7 @@
 .gz-sheet-hero-corner-tr{ top: 10px; right: 10px; border-left: 0; border-bottom: 0; }
 .gz-sheet-hero-corner-bl{ bottom: 10px; left: 10px; border-right: 0; border-top: 0; }
 .gz-sheet-hero-corner-br{ bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
-.gz-sheet-content{ grid-column: 1 / -1; }
+.gz-sheet-content{ grid-column: 1 / -1; flex-shrink: 0; }
 
 /* ════════════════ CATA QUIZ (modal disparado desde el header) ════════════ */
 .gz-cata-modal-wrap{

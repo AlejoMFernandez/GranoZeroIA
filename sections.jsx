@@ -43,6 +43,21 @@ const CONTINENT_PATHS = {
 
 function SectionOrigen() {
   const [active, setActive] = useS(ORIGENES[0]);
+  const [sheetOpen, setSheetOpen] = useS(false);
+
+  useE(() => {
+    if (!sheetOpen) return;
+    const onEsc = (e) => e.key === "Escape" && setSheetOpen(false);
+    window.addEventListener("keydown", onEsc);
+    document.body.style.overflow = "hidden";
+    return () => { window.removeEventListener("keydown", onEsc); document.body.style.overflow = ""; };
+  }, [sheetOpen]);
+
+  const openOrigen = (o) => {
+    Sfx.click();
+    setActive(o);
+    if (window.matchMedia("(max-width: 1080px)").matches) setSheetOpen(true);
+  };
 
   return (
     <section className="gz-section gz-section-origen" id="origen">
@@ -62,6 +77,7 @@ function SectionOrigen() {
           {/* Cinturón cafetero — banda dorada glow */}
           <div className="gz-origen-belt" />
 
+          <div className="gz-origen-map-scroll">
           <svg viewBox="0 0 1000 500" className="gz-origen-svg" preserveAspectRatio="xMidYMid meet">
             <defs>
               <radialGradient id="originPulse" cx="50%" cy="50%">
@@ -99,7 +115,7 @@ function SectionOrigen() {
               return (
                 <g key={o.id}
                   className={`gz-origen-marker ${isActive ? "is-active" : ""}`}
-                  onClick={() => { Sfx.click(); setActive(o); }}>
+                  onClick={() => openOrigen(o)}>
                   {/* Pulso amplio si está activo */}
                   {isActive && (
                     <>
@@ -136,6 +152,12 @@ function SectionOrigen() {
               );
             })}
           </svg>
+          </div>
+
+          <div className="gz-origen-scroll-hint" aria-hidden="true">
+            <span className="gz-lamina-hint-dot" />
+            deslizá para explorar
+          </div>
 
           {/* Granos cayendo decorativos (background) */}
           <div className="gz-origen-floating-beans" aria-hidden="true">
@@ -203,6 +225,47 @@ function SectionOrigen() {
           </button>
         ))}
       </div>
+
+      {/* Ficha deslizable del origen — reemplaza el panel lateral en mobile,
+          igual patrón que la ficha de receta del catálogo */}
+      {sheetOpen && ReactDOM.createPortal(
+        <div className="gz-sheet-wrap gz-origen-sheet-wrap" onClick={(e) => { if (e.target === e.currentTarget) { Sfx.click(); setSheetOpen(false); } }}>
+          <div className="gz-sheet gz-origen-sheet">
+            <button className="gz-sheet-close" onClick={() => { Sfx.click(); setSheetOpen(false); }} aria-label="Cerrar">×</button>
+
+            <div className="gz-origen-detail-num">0{ORIGENES.indexOf(active) + 1} / {ORIGENES.length}</div>
+            <div className="gz-origen-detail-cont">{active.cont}</div>
+            <h3 className="gz-origen-detail-name">{active.name}</h3>
+            <p className="gz-origen-detail-desc">{active.desc}</p>
+            <div className="gz-origen-detail-data">
+              <div>
+                <span className="gz-mini-label">Altitud</span>
+                <strong>{active.altitud}</strong>
+              </div>
+              <div>
+                <span className="gz-mini-label">Notas típicas</span>
+                <div className="gz-chips">
+                  {active.notas.map((n) => <span key={n} className="gz-chip gz-chip-sm">{n}</span>)}
+                </div>
+              </div>
+            </div>
+
+            <div className="gz-origen-nav">
+              <button className="gz-origen-nav-btn" onClick={() => {
+                Sfx.click();
+                const i = ORIGENES.indexOf(active);
+                setActive(ORIGENES[(i - 1 + ORIGENES.length) % ORIGENES.length]);
+              }}>← Anterior</button>
+              <button className="gz-origen-nav-btn" onClick={() => {
+                Sfx.click();
+                const i = ORIGENES.indexOf(active);
+                setActive(ORIGENES[(i + 1) % ORIGENES.length]);
+              }}>Siguiente →</button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
     </section>
   );
 }
