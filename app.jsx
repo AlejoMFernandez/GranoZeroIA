@@ -129,15 +129,11 @@ function Splash({ onDone }) {
 
 // ─── HOME: hero con taza humeante ────────────────────────────────────────────
 
-function Home({ onJumpCatalog, onOpenCata }) {
+function Home({ onJumpCatalog }) {
   return (
     <section className="gz-home" id="top">
       <div className="gz-home-grid">
         <div className="gz-home-text">
-          <div className="gz-eyebrow">
-            <span className="gz-eyebrow-dot" />
-            <span>Tu PWA para aprender de café</span>
-          </div>
           <h1 className="gz-headline">
             El café no debería <em>intimidarte.</em>
           </h1>
@@ -150,24 +146,14 @@ function Home({ onJumpCatalog, onOpenCata }) {
               Empezar el recorrido
               <span className="gz-cta-arrow">→</span>
             </button>
-            <button className="gz-cta gz-cta-ghost" onClick={() => {Sfx.click();onOpenCata();}}>
-              ¿Qué café sos?
-            </button>
-          </div>
-          <div className="gz-home-stats">
-            <Stat n="8" label="cafés esenciales" />
-            <span className="gz-stat-sep" />
-            <Stat n="≈3 min" label="por preparación" />
-            <span className="gz-stat-sep" />
-            <Stat n="0" label="vocabulario críptico" />
           </div>
         </div>
 
         <CenterpieceCup />
       </div>
 
-      {/* Marquee inferior */}
-      <Marquee />
+      {/* Mesa de madera: apoyo visual de la taza y separador con Origen */}
+      <div className="gz-hero-table" aria-hidden="true" />
     </section>);
 
 }
@@ -184,10 +170,9 @@ function Stat({ n, label }) {
 function CenterpieceCup() {
   return (
     <div className="gz-stage">
-      <div className="gz-stage-plinth" />
       <div className="gz-stage-cupwrap">
       <div className="gz-stage-steam" aria-hidden="true">
-        <Steam count={4} height={130} color="rgba(241,234,216,.5)" delay={400} />
+        <Steam count={4} height={70} color="rgba(241,234,216,.5)" delay={400} />
       </div>
       <svg className="gz-stage-cup" viewBox="0 0 320 280" style={{ width: "100%", height: "auto" }} aria-hidden="true">
         <defs>
@@ -244,23 +229,6 @@ function CenterpieceCup() {
 
 // (función _OldCenterpiece eliminada — ahora CenterpieceCup ES la versión CSS/SVG)
 function _Unused() { return null; }
-
-function Marquee() {
-  const items = ["Espresso", "Ristretto", "Cortado", "Cappuccino", "Flat White", "Latte", "Americano", "Mocha"];
-  const loop = [...items, ...items, ...items];
-  return (
-    <div className="gz-marquee" aria-hidden="true">
-      <div className="gz-marquee-track">
-        {loop.map((t, i) =>
-        <span key={i} className="gz-marquee-item">
-            <Bean size={12} variant="solid" color="var(--gz-gold)" />
-            <em>{t}</em>
-          </span>
-        )}
-      </div>
-    </div>);
-
-}
 
 // ─── CATÁLOGO ────────────────────────────────────────────────────────────────
 
@@ -488,7 +456,7 @@ function App() {
       
 
       <main className={`gz-main ${stage === "app" ? "is-ready" : ""}`}>
-        <Home onJumpCatalog={jumpCatalog} onOpenCata={() => setCataOpen(true)} />
+        <Home onJumpCatalog={jumpCatalog} />
         <SectionOrigen />
         <SectionMetodos />
         <Catalog onOpen={setSelected} refEl={catalogRef} />

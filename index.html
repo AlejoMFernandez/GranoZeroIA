@@ -86,10 +86,6 @@ body::before{
   from { opacity:.001; transform: translateY(40px) rotate(-2deg); }
   to   { opacity:1; transform: translateY(0) rotate(0); }
 }
-@keyframes gz-marquee-slide {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-33.333%); }
-}
 @keyframes gz-spin { to { transform: rotate(360deg); } }
 @keyframes gz-pulse-dot {
   0%,100% { transform: scale(1); opacity:1; }
@@ -235,7 +231,7 @@ body::before{
 /* ────── HOME ─────────────────────────────────────────────────────────────── */
 .gz-main{ position:relative; z-index:2; }
 .gz-home{
-  min-height: 100vh; padding: 96px 32px 40px;
+  padding: 96px 32px 0;
   position:relative;
   background: radial-gradient(ellipse at 80% 0%, rgba(200,136,31,.10), transparent 50%),
               radial-gradient(ellipse at 0% 100%, rgba(124,74,32,.18), transparent 60%),
@@ -244,38 +240,64 @@ body::before{
 .gz-home-grid{
   max-width: 1240px; margin: 0 auto;
   display:grid; grid-template-columns: minmax(0,1.05fr) minmax(0,1fr); gap: 56px;
-  align-items: center; min-height: calc(100vh - 200px);
-  padding-bottom: 56px;
+  align-items: center; min-height: min(640px, calc(100vh - 260px));
+  padding-bottom: 24px;
+}
+
+/* Mesa de madera maciza: apoyo de la taza y, a la vez, el borde/separador
+   entre el hero y Origen — por eso es full-bleed y pegada al fondo. */
+.gz-hero-table{
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 100px;
+  z-index: 3;
+  pointer-events: none;
+  background-color: #5c3a22;
+  background-image:
+    /* vetas finas, casi horizontales, con un poquito de irregularidad */
+    repeating-linear-gradient(179deg,
+      rgba(0,0,0,.12) 0px, rgba(0,0,0,.12) 1px,
+      transparent 1px, transparent 5px
+    ),
+    repeating-linear-gradient(182deg,
+      rgba(255,215,175,.055) 0px, rgba(255,215,175,.055) 1px,
+      transparent 1px, transparent 9px
+    ),
+    repeating-linear-gradient(177deg,
+      rgba(0,0,0,.06) 0px, rgba(0,0,0,.06) 2px,
+      transparent 2px, transparent 21px
+    ),
+    /* costuras de los tablones de la mesa maciza */
+    repeating-linear-gradient(90deg,
+      rgba(0,0,0,.22) 0px, rgba(0,0,0,.22) 2px,
+      transparent 2px, transparent 340px
+    ),
+    /* un par de nudos de la madera */
+    radial-gradient(ellipse 46px 9px at 16% 32%, rgba(0,0,0,.22), transparent 72%),
+    radial-gradient(ellipse 36px 7px at 69% 68%, rgba(0,0,0,.18), transparent 72%),
+    radial-gradient(ellipse 40px 8px at 89% 28%, rgba(0,0,0,.16), transparent 72%);
+  border-top: 2px solid rgba(255,197,130,.3);
+  box-shadow: inset 0 2px 0 rgba(255,255,255,.07), inset 0 -16px 22px rgba(0,0,0,.4), 0 -10px 24px rgba(0,0,0,.5);
 }
 
 .gz-home-text{ animation: gz-rise 1s ease .2s both; }
-.gz-eyebrow{
-  display:inline-flex; align-items:center; gap:10px;
-  font-family:var(--mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase;
-  color: rgba(241,234,216,.6);
-  padding: 8px 14px; border-radius: 999px;
-  border: 1px solid rgba(241,234,216,.14);
-  margin-bottom: 24px;
-}
-.gz-eyebrow-dot{ width:8px; height:8px; border-radius:50%; background:var(--gz-gold); animation: gz-pulse-dot 1.6s ease infinite; }
 
 .gz-headline{
   font-family:var(--brand); font-weight:500;
-  font-size: clamp(38px, 4.6vw, 68px);
-  line-height: 1.02; margin: 0 0 22px;
-  letter-spacing:-.015em;
+  font-size: clamp(44px, 6.2vw, 92px);
+  line-height: .98; margin: 0 0 26px;
+  letter-spacing:-.02em;
   text-wrap: balance;
 }
 .gz-headline em{ color: var(--gz-gold); font-style: italic; }
 
 .gz-sub{
-  font-size: clamp(15px, 1.3vw, 18px);
+  font-size: clamp(16px, 1.4vw, 19px);
   line-height: 1.55; max-width: 460px;
   color: rgba(241,234,216,.72);
-  margin: 0 0 36px;
+  margin: 0 0 40px;
 }
 
-.gz-cta-row{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom: 56px; }
+.gz-cta-row{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom: 0; }
 .gz-cta{
   display:inline-flex; align-items:center; gap:10px;
   padding: 16px 24px; border-radius: 999px;
@@ -294,14 +316,6 @@ body::before{
   border: 1px solid rgba(241,234,216,.25);
 }
 .gz-cta-ghost:hover{ border-color: var(--gz-gold); color: var(--gz-gold); }
-
-.gz-home-stats{
-  display:flex; gap:24px; align-items:center;
-}
-.gz-stat{ display:flex; flex-direction:column; gap:2px; }
-.gz-stat strong{ font-family:var(--serif); font-size:28px; line-height:1; font-weight:400; }
-.gz-stat span{ font-family:var(--mono); font-size:10px; letter-spacing:.2em; text-transform:uppercase; color:rgba(241,234,216,.5); }
-.gz-stat-sep{ width:1px; height:32px; background: rgba(241,234,216,.18); }
 
 /* CENTERPIECE — foto real del espresso */
 .gz-stage-photo{
@@ -333,8 +347,9 @@ body::before{
 }
 .gz-stage-photo-corner span:first-child{ width:5px; height:5px; border-radius:50%; background: var(--gz-gold); }
 .gz-stage{
-  position:relative; display:flex; align-items:center; justify-content:center;
+  position:relative; display:flex; align-items:flex-end; justify-content:center;
   min-height: 560px;
+  padding-bottom: 80px;
   animation: gz-rise 1.2s ease .5s both;
 }
 .gz-stage-cupwrap{
@@ -343,17 +358,6 @@ body::before{
 .gz-stage-steam{
   position:absolute; left:50%; bottom:60%; transform: translateX(-50%);
   z-index:1; pointer-events:none; mix-blend-mode: screen;
-}
-.gz-stage-plinth{
-  position:absolute; bottom:60px; left:50%; transform: translateX(-50%);
-  width: 80%; max-width: 480px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gz-gold) 50%, transparent);
-  opacity:.4;
-}
-.gz-stage-plinth::after{
-  content:""; position:absolute; left:0; right:0; top:-1px; height: 240px;
-  background: radial-gradient(ellipse at 50% 100%, rgba(200,136,31,.15), transparent 60%);
-  pointer-events:none;
 }
 .gz-stage-cup{
   position:relative; z-index:2; width: 100%; display:block;
@@ -381,38 +385,17 @@ body::before{
 
 @media (max-width: 1080px){
   .gz-home-grid{ grid-template-columns: minmax(0,1fr); gap: 32px; min-height: 0; padding-bottom: 0; align-items: start; }
-  .gz-stage{ min-height: 460px; }
+  .gz-stage{ min-height: 460px; padding-bottom: 57px; }
   .gz-stage-cupwrap{ width: 64%; max-width: 360px; }
   .gz-stage-deco{ display: none; }
-  .gz-home-stats{ display: none; }
-  .gz-cta-row{ display: none; }
+  .gz-hero-table{ height: 72px; }
 }
 @media (max-width: 600px){
-  .gz-stage{ min-height: 380px; }
+  .gz-stage{ min-height: 340px; padding-bottom: 48px; }
   .gz-stage-cupwrap{ width: 76%; max-width: 280px; }
   .gz-headline{ font-size: clamp(34px, 9vw, 48px); }
+  .gz-hero-table{ height: 60px; }
 }
-
-/* MARQUEE — ahora flow normal al final del home, no absolute */
-.gz-marquee{
-  position:relative;
-  margin: 40px -28px 0;
-  overflow:hidden;
-  border-top: 1px solid rgba(241,234,216,.08);
-  border-bottom: 1px solid rgba(241,234,216,.08);
-  padding: 18px 0;
-  background: rgba(14,9,7,.5);
-}
-.gz-marquee-track{
-  display:flex; gap: 48px; width: max-content;
-  animation: gz-marquee-slide 32s linear infinite;
-}
-.gz-marquee-item{
-  display:inline-flex; align-items:center; gap:14px;
-  font-family:var(--serif); font-size:24px; color: rgba(241,234,216,.4);
-  white-space: nowrap;
-}
-.gz-marquee-item em{ font-style:italic; }
 
 /* ────── CATÁLOGO ─────────────────────────────────────────────────────────── */
 .gz-catalog{
