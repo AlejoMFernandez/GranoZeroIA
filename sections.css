@@ -1186,6 +1186,27 @@
 }
 .gz-catcard:hover .gz-catcard-arrow{ transform: translateX(6px); color: var(--gz-gold); }
 
+/* En mobile, 8 tarjetas apiladas de a una eran un scroll eterno.
+   Se pasa a grilla de 2 columnas, más compacta, para que se vea como
+   un catálogo real y no una lista larga. */
+@media (max-width: 640px){
+  .gz-catgrid{ grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .gz-catcard{ border-radius: 18px; padding-bottom: 14px; }
+  .gz-catcard-fig{ font-size: 8px; padding: 3px 7px; top: 8px; left: 8px; }
+  .gz-catcard-art-corner{ width: 9px; height: 9px; }
+  .gz-catcard-meta{ padding: 12px 12px 0; gap: 4px; }
+  .gz-catcard-title{ font-size: 18px; }
+  .gz-catcard-title em{ font-size: 10.5px; margin-top: 2px; }
+  .gz-catcard-tag{
+    font-size: 11px; line-height: 1.4;
+    display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+  }
+  .gz-catcard-footer{ margin-top: 8px; padding-top: 8px; }
+  .gz-catcard-intensity-label{ font-size: 7px; letter-spacing: .16em; }
+  .gz-catcard-intensity .gz-intensity-bean{ width: 9px; }
+  .gz-catcard-arrow{ font-size: 15px; }
+}
+
 /* Steam animation que corre cuando el catcard hace hover (running=hover) */
 .gz-cil-steam{ opacity: 0; transform-origin: center bottom; }
 .gz-cil.is-running .gz-st-1{ animation: gz-cil-steam 2.4s ease-out infinite; }

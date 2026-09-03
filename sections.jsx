@@ -500,20 +500,34 @@ function AnatomiaArt({ id }) {
 // 03 · TUESTE — slider con grano que cambia de color
 // ════════════════════════════════════════════════════════════════════════════
 
-// Usa assets/tueste/<id>.png si existe (foto real); si no, cae al grano con filtro
+// Usa assets/tueste/<id>.png si existe (foto real); si no, cae al grano con filtro.
+// La foto se precarga en memoria antes de mostrarla: así nunca se ve el
+// ícono de "imagen rota" ni el flash de box-shadow mientras se confirma
+// si el archivo existe — se ve el grano ilustrado (que ya se ve bien) hasta
+// que la foto real, si existe, está lista para reemplazarlo sin parpadeo.
+const _tuestePhotoCache = {};
 function TuesteBeanImg({ t }) {
-  const [failed, setFailed] = useS(false);
-  useE(() => { setFailed(false); }, [t.id]);
-  if (failed) {
+  const [hasPhoto, setHasPhoto] = useS(() => _tuestePhotoCache[t.id] === true);
+
+  useE(() => {
+    const cached = _tuestePhotoCache[t.id];
+    if (cached !== undefined) { setHasPhoto(cached); return; }
+    setHasPhoto(false);
+    const img = new Image();
+    img.onload = () => { _tuestePhotoCache[t.id] = true; setHasPhoto(true); };
+    img.onerror = () => { _tuestePhotoCache[t.id] = false; };
+    img.src = `assets/tueste/${t.id}.png`;
+  }, [t.id]);
+
+  if (hasPhoto) {
     return (
-      <img src="assets/bean.png" alt={`Grano ${t.name}`} className="gz-tueste-bean"
-        style={{ filter: t.filter }} />
+      <img src={`assets/tueste/${t.id}.png`} alt={`Grano ${t.name}`}
+        className="gz-tueste-bean gz-tueste-bean-photo" />
     );
   }
   return (
-    <img src={`assets/tueste/${t.id}.png`} alt={`Grano ${t.name}`}
-      className="gz-tueste-bean gz-tueste-bean-photo"
-      onError={() => setFailed(true)} />
+    <img src="assets/bean.png" alt={`Grano ${t.name}`} className="gz-tueste-bean"
+      style={{ filter: t.filter }} />
   );
 }
 
