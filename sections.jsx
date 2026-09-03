@@ -563,22 +563,23 @@ function SectionTueste() {
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Slider */}
-      <div className="gz-tueste-slider">
-        <div className="gz-tueste-track">
-          <div className="gz-tueste-track-line"
-            style={{ background: `linear-gradient(90deg, ${TUESTES.map(x => x.color).join(", ")})` }} />
-          {TUESTES.map((tt, i) => (
-            <button key={tt.id}
-              className={`gz-tueste-stop ${i === idx ? "is-active" : ""}`}
-              onClick={() => { Sfx.click(); setIdx(i); }}
-              aria-label={`Tueste ${tt.name}`}>
-              <span className="gz-tueste-stop-dot" style={{ background: tt.color }} />
-              <span className="gz-tueste-stop-label">{tt.name}</span>
-            </button>
-          ))}
+        {/* Slider — en mobile va pegado al grano (mismo bloque visual) para
+            que tocar un nivel y ver el cambio no requiera hacer scroll */}
+        <div className="gz-tueste-slider">
+          <div className="gz-tueste-track">
+            <div className="gz-tueste-track-line"
+              style={{ background: `linear-gradient(90deg, ${TUESTES.map(x => x.color).join(", ")})` }} />
+            {TUESTES.map((tt, i) => (
+              <button key={tt.id}
+                className={`gz-tueste-stop ${i === idx ? "is-active" : ""}`}
+                onClick={() => { Sfx.click(); setIdx(i); }}
+                aria-label={`Tueste ${tt.name}`}>
+                <span className="gz-tueste-stop-dot" style={{ background: tt.color }} />
+                <span className="gz-tueste-stop-label">{tt.name}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>

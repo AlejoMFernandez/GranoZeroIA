@@ -380,11 +380,12 @@ body::before{
 }
 
 @media (max-width: 1080px){
-  .gz-home-grid{ grid-template-columns: minmax(0,1fr); gap: 32px; }
+  .gz-home-grid{ grid-template-columns: minmax(0,1fr); gap: 32px; min-height: 0; padding-bottom: 0; align-items: start; }
   .gz-stage{ min-height: 460px; }
   .gz-stage-cupwrap{ width: 64%; max-width: 360px; }
   .gz-stage-deco{ display: none; }
   .gz-home-stats{ display: none; }
+  .gz-cta-row{ display: none; }
 }
 @media (max-width: 600px){
   .gz-stage{ min-height: 380px; }
